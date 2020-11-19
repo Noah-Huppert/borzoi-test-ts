@@ -1,0 +1,24 @@
+{
+  "name": "borzoi-test",
+  "version": "0.1.0",
+  "description": "JavaScript ES6 testing library.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Noah-Huppert/js-borzoi-test.git"
+  },
+  "keywords": [
+    "test",
+    "es6",
+    "async"
+  ],
+  "author": "Noah Huppert",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Noah-Huppert/js-borzoi-test/issues"
+  },
+  "homepage": "https://github.com/Noah-Huppert/js-borzoi-test#readme"
+}
