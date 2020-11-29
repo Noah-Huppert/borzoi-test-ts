@@ -8,7 +8,7 @@ JavaScript ES6 testing library.
 Borzoi test implements a simple fluid familiar testing pattern, compatible with 
 ES6 modules.
 
-```
+```js
 import Tester from "borzo-test";
 
 // A simple function to test
