@@ -1,10 +1,14 @@
+/**
+ * Convert a boolean into a check or x emoji.
+ * @param value {boolean} To transform into emoji.
+ * @returns {string} Check emoji if value is true, x emoji if false.
+ */
 function booleanToEmoji(value) {
-    let passedStr = '✔️';
-    if (value === false) {
-        passedStr = '❌';
+    if (value === true) {
+	   return '✔️';
     }
-
-    return passedStr;
+    
+    return '❌';
 }
 
 const COLOR_RESET = '\x1b[0m';
@@ -12,14 +16,27 @@ const COLOR_FG_BLACK = '\x1b[30m';
 const COLOR_BG_RED = '\x1b[41m';
 const COLOR_BG_GREEN = '\x1b[42m';
 
+/**
+ * Convert a boolean into console color codes.
+ * @param value {boolean} To transform into color codes.
+ * @returns {string} Console color code green if value is true, red if false.
+ */
 function booleanToColor(value) {
     if (value === true) {
         return COLOR_FG_BLACK + COLOR_BG_GREEN;
-    } else {
-        return COLOR_FG_BLACK + COLOR_BG_RED;
     }
+    
+    return COLOR_FG_BLACK + COLOR_BG_RED;
 }
 
+/**
+ * Emulate Array.map functionality for objects.
+ * @param obj {Object} To iterate over.
+ * @param fn {function(key, value)} Function to run for each key in the object. The 
+ *     object key is passed as the first argument, value as the second. Expected to
+ *     return an item just like Array.map.
+ * @returns {any[]} Array of items returned by your map function.
+ */
 function objMap(obj, fn) {
     return Object.keys(obj)
         .map((key) => {
@@ -27,117 +44,30 @@ function objMap(obj, fn) {
         });
 }
 
+/**
+ * Main testing interface which library provides.
+ */
 export default class Tester {
+    /**
+	* Define a test.
+	* @param subject {string} Description of test.
+	* @param fn {function(Tester)} Function which performs the test. Passed a 
+	*     RuntimeTester instance which allows you to run assertions and
+	*     register sub-tests.
+	*/
     constructor(subject, fn) {
-        // Definition
         this.subject = subject;
         this.fn = fn;
     }
 
+    /**
+	* Run tests and return a results object. If you are a user and just want to run
+	* your tests and have the results printed to the console use execute() instead!
+	* @returns 
+	*/
     async run() {
         // Collect assertions and children
-        const runtimeTester = {
-            assertions: {},
-            children: [],
-
-            test: function(subject, fn) {
-                this.children.push(new Tester(subject, fn));
-                return this;
-            },
-            assert: function(subject) {
-                if (Object.keys(this.assertions).indexOf(subject) !== -1) {
-                    throw `Assertion with subject "${subject}" already exists and cannot be replaced`;
-                }
-                
-                this.assertions[subject] = {
-                    subject: subject,
-                    result: undefined,
-                    
-                    actualValue: undefined,
-                    expectedValue: undefined,
-                    type: 'eq',
-
-                    actual: function(value) {
-                        this.actualValue = value;
-                        return this;
-                    },
-                    expected: function(value) {
-                        this.expectedValue = value;
-                        return this;
-                    },
-                    ne: function(value) {
-                        this.expectedValue = value;
-                        this.type = 'ne';
-                    },
-                    gt: function(value) {
-                        this.expectedValue = value;
-                        this.type = 'gt';
-                    },
-                    lt: function(value) {
-                        this.expectedValue = value;
-                        this.type = 'lt';
-                    },
-                    gte: function(value) {
-                        this.expectedValue = value;
-                        this.type = 'gte';
-                    },
-                    lte: function(value) {
-                        this.expectedValue = value;
-                        this.type = 'lte';
-                    },
-                    run: function() {
-                        let result = true;
-                        let typeSymbol = '';
-                        let typeWords = '';
-                        
-                        switch (this.type) {
-                        case 'eq':
-                            result = this.actualValue === this.expectedValue;
-                            typeSymbol = '===';
-                            typeWords = 'equal';
-                            break;
-                        case 'ne':
-                            result = this.actualValue !== this.expectedValue;
-                            typeSymbol = '!==';
-                            typeWords = 'not equal';
-                            break;
-                        case 'gt':
-                            result = this.actualValue > this.expectedValue;
-                            typeSymbol = '>';
-                            typeWords = 'greater than';
-                            break;
-                        case 'lt':
-                            result = this.actualValue < this.expectedValue;
-                            typeSymbol = '<';
-                            typeWords = 'less than';
-                            break;
-                        case 'gte':
-                            result = this.actualValue >= this.expectedValue;
-                            typeSymbol = '>=';
-                            typeWords = 'greater than or equal to';
-                            break;
-                        case 'lte':
-                            result = this.actualValue <= this.expectedValue;
-                            typeSymbol = '<=';
-                            typeWords = 'less than or equal to';
-                            break;
-                        }
-                        
-                        return {
-                            actual: this.actualValue,
-                            expected: this.expectedValue,
-                            type: this.type,
-                            typeSymbol: typeSymbol,
-                            typeWords: typeWords,
-                            result: result,
-                            subject: this.subject,
-                        };
-                    },
-                };
-
-                return this.assertions[subject];
-            },
-        };
+	   const runtimeTester = new RuntimeTester();
         await this.fn(runtimeTester);
 
         const assertRes = objMap(runtimeTester.assertions, (key, a) => {
@@ -200,5 +130,145 @@ export default class Tester {
                 childOut.forEach((l) => out.push(l));
             });
         return out;
+    }
+
+    async execute() {
+	   const res = await this.run();
+	   
+	   console.log(T.resultToString(res).join('\n'));
+
+	   let exitCode = 0;
+	   if (T.resultCheck(res) === false) {
+		  console.log('TESTS FAILED');
+		  exitCode = 1;
+	   } else {
+		  console.log('GOOD');
+	   }
+
+	   process.exit(exitCode);
+    }
+}
+
+/**
+ * Holds the results of tests.
+ */
+class TestResult {
+    // TODO Migrate result* functions and data here
+}
+
+class RuntimeTester {
+    constructor() {
+        this.assertions = {};
+        this.children = [];
+    }
+    
+    test(subject, fn) {
+        this.children.push(new Tester(subject, fn));
+        return this;
+    }b8nm
+    
+    assert(subject) {
+        if (Object.keys(this.assertions).indexOf(subject) !== -1) {
+            throw `Assertion with subject "${subject}" already exists and cannot be replaced`;
+        }
+        
+        this.assertions[subject] = new Assertion();
+
+        return this.assertions[subject];
+    }
+}
+
+class Assertion {
+    constructor() {
+        this.subject = subject;
+        this.result = undefined;
+            
+        this.actualValue = undefined;
+        this.expectedValue = undefined;
+        this.type = 'eq';
+    }
+    
+    actual(value) {
+        this.actualValue = value;
+        return this;
+    }
+    
+    expected(value) {
+        this.expectedValue = value;
+        return this;
+    }
+    
+    ne(value) {
+        this.expectedValue = value;
+        this.type = 'ne';
+    }
+    
+    gt(value) {
+        this.expectedValue = value;
+        this.type = 'gt';
+    }
+    
+    lt(value) {
+        this.expectedValue = value;
+        this.type = 'lt';
+    }
+    
+    gte(value) {
+        this.expectedValue = value;
+        this.type = 'gte';
+    }
+    
+    lte(value) {
+        this.expectedValue = value;
+        this.type = 'lte';
+    }
+    
+    run:() {
+        let result = true;
+        let typeSymbol = '';
+        let typeWords = '';
+        
+        switch (this.type) {
+        case 'eq':
+            result = this.actualValue === this.expectedValue;
+            typeSymbol = '===';
+            typeWords = 'equal';
+            break;
+        case 'ne':
+            result = this.actualValue !== this.expectedValue;
+            typeSymbol = '!==';
+            typeWords = 'not equal';
+            break;
+        case 'gt':
+            result = this.actualValue > this.expectedValue;
+            typeSymbol = '>';
+            typeWords = 'greater than';
+            break;
+        case 'lt':
+            result = this.actualValue < this.expectedValue;
+            typeSymbol = '<';
+            typeWords = 'less than';
+            break;
+        case 'gte':
+            result = this.actualValue >= this.expectedValue;
+            typeSymbol = '>=';
+            typeWords = 'greater than or equal to';
+            break;
+        case 'lte':
+            result = this.actualValue <= this.expectedValue;
+            typeSymbol = '<=';
+            typeWords = 'less than or equal to';
+            break;
+        }
+        
+        return {
+            actual: this.actualValue,
+            expected: this.expectedValue,
+            type: this.type,
+            typeSymbol: typeSymbol,
+            typeWords: typeWords,
+            result: result,
+            subject: this.subject,
+        };
     }
 }
