@@ -4,7 +4,7 @@
     "description": "JavaScript ES6 testing library.",
     "main": "lib/index.js",
     "scripts": {
-        "test": "node lib/test_good.js && (!(node lib/test_bad.js))",
+        "test": "node lib/tests/test.js",
         "build": "tsc -p ."
     },
     "repository": {
