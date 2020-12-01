@@ -1,4 +1,4 @@
-![Borzoi dog](./icon.png)
+<img alt="Borzoi dog" width="200px" src="./icon.png">
 
 # Borzoi Test
 Typescript and JavaScript ES6 testing library.
