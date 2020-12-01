@@ -1,12 +1,12 @@
-# Borzoi JS Test
-JavaScript ES6 testing library.
+# Borzoi Test
+Typescript and JavaScript ES6 testing library.
 
 # Table Of Contents
 - [Overview](#overview)
 
 # Overview
-Borzoi test implements a simple fluid familiar testing pattern, compatible with 
-ES6 modules.
+Borzoi test implements a simple familiar testing pattern, compatible with 
+Typescript.
 
 To use:
 
