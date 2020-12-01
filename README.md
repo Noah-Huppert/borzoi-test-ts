@@ -66,3 +66,44 @@ compared.
 The `RuntimeTester` `test()` method works exactly the same as the `Tester` 
 constructor. The first argument is a subject description and the second argument
 is the test function.
+
+Finally you must run the `execute()` method of the `Tester` instance you created
+at the beginning.
+
+```js
+const T = new Tester("A short blurb about what I am testing", (T: RuntimeTester) => {
+    // ...
+});
+
+T.execute();
+```
+
+This `execute()` method of the `Tester` class will run all the defined tests and
+exit the process with code 0 if all tests succeeded and 1 if any tests failed. 
+Additionally a color coded summary of test results is printed to standard out.
+
+The complete example:
+
+```js
+/**
+ * An example function which is being tested.
+ * @returns A value.
+ */
+function foo(): string {
+    return "A_VALUE";
+}
+
+const T = new Tester("A short blurb about what I am testing", (T: RuntimeTester) => {
+    // Define assertions
+    T.assert("A short description of what is being asserted")
+        .actual(foo())
+        .eq("A_VALUE"); // Can use: ne(), lt(), gt(), lte(), gte() as well
+        
+    // Define sub-tests
+    T.test("Another short blurb, a sub-test", (T: RuntimeTester) => {
+        // ... Do sub-tests here ....
+    });
+});
+
+T.execute();
+```
