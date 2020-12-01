@@ -1,6 +1,7 @@
 <img alt="Borzoi dog" width="350px" src="./icon.png">  
 
-<div style="text-align: center; width=100%;"><i><a href="https://www.instagram.com/birch.the.borzoi/">Photo credit</a></i></div>
+| *([Photo credit](https://www.instagram.com/birch.the.borzoi/))* |
+| --- |
 
 | **[NPM Package (`borzoi-test`)](https://www.npmjs.com/package/borzoi-test)** | ![GitHub Actions workflow status indicator](https://github.com/Noah-Huppert/borzoi-test-ts/workflows/CI/badge.svg) |
 | --- | --- |
