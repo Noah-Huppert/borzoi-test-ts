@@ -7,6 +7,7 @@ Typescript and JavaScript ES6 testing library.
 
 # Table Of Contents
 - [Overview](#overview)
+- [Development](#development)
 
 # Overview
 Borzoi test implements a simple familiar testing pattern, compatible with 
@@ -32,7 +33,7 @@ Next create an instance of a `Tester`. The constructor takes a subject and test
 function as arguments:
 
 ```js
-const T = new Tester("A short blurb about what I am testing", (T: RuntimeTester) => {
+const tests = new Tester("A short blurb about what I am testing", (T: RuntimeTester) => {
     // ...
 });
 ```
@@ -42,19 +43,11 @@ function is provided a `RuntimeTester` instance as an argument. With this you
 can define assertions or define sub-tests.
 
 ```js
-/**
- * An example function which is being tested.
- * @returns A value.
- */
-function foo(): string {
-    return "A_VALUE";
-}
-
-const T = new Tester("A short blurb about what I am testing", (T: RuntimeTester) => {
+const tests = new Tester("A short blurb about what I am testing", (T: RuntimeTester) => {
     // Define assertions
     T.assert("A short description of what is being asserted")
-        .actual(foo())
-        .eq("A_VALUE"); // Can use: ne(), lt(), gt(), lte(), gte() as well
+        .actual(["a", "b", "c"].join("-"))
+        .eq("a-b-c"); // Can use: ne(), lt(), gt(), lte(), gte() as well
         
     // Define sub-tests
     T.test("Another short blurb, a sub-test", (T: RuntimeTester) => {
@@ -73,17 +66,19 @@ compared.
 
 The `RuntimeTester` `test()` method works exactly the same as the `Tester` 
 constructor. The first argument is a subject description and the second argument
-is the test function.
+is the test function. However tests defined this way are recorded as sub-tests. 
+This is purely for code organization purposes and does not effect the way tests 
+are run.
 
 Finally you must run the `execute()` method of the `Tester` instance you created
 at the beginning.
 
 ```js
-const T = new Tester("A short blurb about what I am testing", (T: RuntimeTester) => {
+const tests = new Tester("A short blurb about what I am testing", (T: RuntimeTester) => {
     // ...
 });
 
-T.execute();
+tests.execute();
 ```
 
 This `execute()` method of the `Tester` class will run all the defined tests and
@@ -103,7 +98,7 @@ function foo(): string {
     return "A_VALUE";
 }
 
-const T = new Tester("A short blurb about what I am testing", (T: RuntimeTester) => {
+const tests = new Tester("A short blurb about what I am testing", (T: RuntimeTester) => {
     // Define assertions
     T.assert("A short description of what is being asserted")
         .actual(foo())
@@ -115,8 +110,38 @@ const T = new Tester("A short blurb about what I am testing", (T: RuntimeTester)
     });
 });
 
-T.execute();
+tests.execute();
 ```
 
 Note that you don't need to import `RuntimeTester` nor have any type annotations
 if you are not using Typescript.
+
+# Development
+Written in Typescript and compiled into JavaScript.
+
+To develop first install dependencies:
+
+```
+npm install
+```
+
+Then compile the Typescript to JavaScript:
+
+```
+npm run build
+```
+
+This outputs the results to `lib/`. The main file is `lib/index.js`. Typescript
+type definitions are outputted to `lib/index.d.ts`.
+
+Next test the code:
+
+```
+npm run test
+```
+
+To publish a new NPM package version:
+
+```
+npm publish
+```
