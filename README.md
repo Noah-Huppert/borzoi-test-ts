@@ -83,7 +83,7 @@ tests.execute();
 
 This `execute()` method of the `Tester` class will run all the defined tests and
 exit the process with code 0 if all tests succeeded and 1 if any tests failed. 
-Additionally a color coded summary of test results is printed to standard out.
+Additionally a color coded summary of test results is printed to standard output.
 
 The complete example:
 
