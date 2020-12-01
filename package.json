@@ -1,8 +1,9 @@
 {
     "name": "borzoi-test",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "JavaScript ES6 testing library.",
-    "main": "lib/index.d.ts",
+    "main": "lib/index.js",
+    "types": "lib/index.d.ts",
     "scripts": {
         "test": "node lib/tests/test.js",
         "build": "tsc -p ."
