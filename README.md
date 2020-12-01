@@ -90,19 +90,11 @@ The complete example:
 ```js
 import Tester, { RuntimeTester } from "borzoi-test";
 
-/**
- * An example function which is being tested.
- * @returns A value.
- */
-function foo(): string {
-    return "A_VALUE";
-}
-
 const tests = new Tester("A short blurb about what I am testing", (T: RuntimeTester) => {
     // Define assertions
     T.assert("A short description of what is being asserted")
-        .actual(foo())
-        .eq("A_VALUE"); // Can use: ne(), lt(), gt(), lte(), gte() as well
+        .actual(["a", "b", "c"].join("-"))
+        .eq("a-b-c"); // Can use: ne(), lt(), gt(), lte(), gte() as well
         
     // Define sub-tests
     T.test("Another short blurb, a sub-test", (T: RuntimeTester) => {
