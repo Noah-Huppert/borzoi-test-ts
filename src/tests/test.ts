@@ -2,8 +2,6 @@ import child_process, { ExecException } from "child_process";
 import path from "path";
 import { Buffer } from "buffer";
 
-import Tester, { RuntimeTester } from "../index";
-
 type MatchTest<T> = (value: T) => boolean;
 type MatchSideEffect<T, R> = (value: T) => R;
 type Matcher<T, R> = [MatchTest<T>, MatchSideEffect<T, R>];
@@ -103,15 +101,15 @@ const TEST_FILES: TestFile[] = [
     { file: "test_bad_lte", expectedSucceeds: false },
 ];
 (async function() {
-    let results: boolean[] = [];
+    const results: boolean[] = [];
 
     for (let i = 0; i < TEST_FILES.length; i++) {
         const testFile = TEST_FILES[i];
         
         // Run test file
         const expectedWordMatchers: Matchers<boolean, string> = [
-            [(v: boolean): boolean => v === true, (v: boolean): string => "succeed"],
-            [(v: boolean): boolean => v === false, (v: boolean): string => "fail"],
+            [(v: boolean): boolean => v === true, (): string => "succeed"],
+            [(v: boolean): boolean => v === false, (): string => "fail"],
         ];
         
         const expectedWord = match(testFile.expectedSucceeds, expectedWordMatchers);
@@ -153,7 +151,7 @@ const TEST_FILES: TestFile[] = [
         }
 
         if (testFile.expectedSucceeds === true) {
-            console.log(`    => PASSED (Expected to ${expectedWord}, did ${expectedWord})`)
+            console.log(`    => PASSED (Expected to ${expectedWord}, did ${expectedWord})`);
             results.push(true);
             continue;
         } else {
@@ -166,7 +164,7 @@ const TEST_FILES: TestFile[] = [
     const numFailed = results.filter((v) => v === false).length;
     if (numFailed > 0) {
         console.log(`FAILED ${numFailed} test(s) failed (${results.length - numFailed} succeeded)`);
-        process.exit(1)
+        process.exit(1);
     }
 
     console.log(`PASSED All ${results.length} test(s) succeeded`);

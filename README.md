@@ -2,6 +2,8 @@
 
 *([Photo credit](https://www.instagram.com/birch.the.borzoi/))*
 
+| **[NPM Package `borzoi-test`](https://www.npmjs.com/package/borzoi-test) | ![GitHub Actions workflow status indicator](https://github.com/Noah-Huppert/borzoi-test-ts/workflows/CI/badge.svg) |
+
 # Borzoi Test
 Typescript and JavaScript ES6 testing library.
 
@@ -63,8 +65,11 @@ const tests = new Tester("A short blurb about what I am testing", (T: RuntimeTes
 ```
 
 Assertions are defined in a fluid style, calling `T.assert()` returns an 
-`Assertion` instance. The `Assertion` class defines the `actual()` method which
-allows you to provide the value being tested by the assertion. Additionally the
+`Assertion` instance. A description of what is being asserted is required for
+this `T.assert()` method. These descriptions must be unique within a test
+(Sub-tests can re-use descriptions which their parents use). The `Assertion`
+class returned by `T.assert()` defines the `actual()` method which allows you to
+provide the value being tested by the assertion. Additionally the
 `eq()` (equal), `ne()` (not equal), `lt()` (less than), `gt()` (greater than),
 `lte()` (less than or equal), and `gte()` (greater than or equal) methods let 
 you provide the expected value and decide how the actual and expected values are
@@ -153,8 +158,29 @@ Next test the code:
 npm run test
 ```
 
+## Release Checklist
 To publish a new NPM package version:
 
-```
-npm publish
-```
+1. Update the version in `package.json`. Then commit and push to the
+   `main` branch.
+2. Lint the code:
+   ```
+   npm run lint
+   ```
+3. Build the code:
+   ```
+   npm run build
+   ```
+4. Test the code:
+   ```
+   npm run test
+   ```
+5. Tag a new GitHub release. Tag and release title in the format
+   `v<npm version>`. In the release body include a one sentence overview. If 
+   there are any known bugs include a `**Note:** <short description and links to
+   bugs>.` line. Then a "Check list" header 1 section with a bullet point list
+   of changes (Include periods at the end of bullet items).
+6. Publish the new version to NPM:
+   ```
+   npm publish
+   ```
