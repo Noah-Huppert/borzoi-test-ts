@@ -1,3 +1,5 @@
+![Borzoi dog](./icon.png)
+
 # Borzoi Test
 Typescript and JavaScript ES6 testing library.
 
