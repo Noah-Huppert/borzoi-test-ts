@@ -14,7 +14,8 @@ To use:
 npm install --save-dev borzoi-test
 ```
 
-Then require `Tester` (default export) and `RuntimeTester` (named export):
+Then require `Tester` (default export) and `RuntimeTester` (named export, you 
+only need to import this if you are using Typescript): 
 
 ```js
 import Tester, { RuntimeTester } from "borzoi-test";
@@ -85,6 +86,8 @@ Additionally a color coded summary of test results is printed to standard out.
 The complete example:
 
 ```js
+import Tester, { RuntimeTester } from "borzoi-test";
+
 /**
  * An example function which is being tested.
  * @returns A value.
@@ -107,3 +110,6 @@ const T = new Tester("A short blurb about what I am testing", (T: RuntimeTester)
 
 T.execute();
 ```
+
+Note that you don't need to import `RuntimeTester` nor have any type annotations
+if you are not using Typescript.
