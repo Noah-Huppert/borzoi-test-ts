@@ -16,14 +16,20 @@ Typescript.
 Named after Borzoi dogs because their long noses will sniff out any bugs in your
 code :)
 
+Makes it easy to define tests as a simple script file and run this
+file like you would any other NodeJs script. No fancy command line test 
+runners required. Just make a script which uses Borzoi Test and run it with
+`node tests.js`.
+
 To use:
 
 ```
 npm install --save-dev borzoi-test
 ```
 
-Then require `Tester` (default export) and `RuntimeTester` (named export, you 
-only need to import this if you are using Typescript): 
+Then make a NodeJs script file and require `Tester` (default export) and
+`RuntimeTester`(named export, you only need to import this if you are 
+using Typescript): 
 
 ```js
 import Tester, { RuntimeTester } from "borzoi-test";
@@ -83,7 +89,21 @@ tests.execute();
 
 This `execute()` method of the `Tester` class will run all the defined tests and
 exit the process with code 0 if all tests succeeded and 1 if any tests failed. 
-Additionally a color coded summary of test results is printed to standard output.
+Additionally a color coded summary of test results is printed to 
+standard output.
+
+Then all you have to do is make your NPM test script run the file you just 
+wrote. Simple as that.
+
+```json
+{
+    ...
+    "scripts": {
+        "test": "node location/of/your/test.js"
+    }
+    ...
+}
+```
 
 The complete example:
 
