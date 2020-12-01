@@ -46,7 +46,7 @@ const tests = new Tester("A short blurb about what I am testing", (T: RuntimeTes
 
 The second argument, the test function, defines the test logic itself. This 
 function is provided a `RuntimeTester` instance as an argument. With this you 
-can define assertions or define sub-tests.
+can define assertions or sub-tests.
 
 ```js
 const tests = new Tester("A short blurb about what I am testing", (T: RuntimeTester) => {
