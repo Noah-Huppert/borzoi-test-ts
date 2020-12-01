@@ -97,11 +97,11 @@ wrote. Simple as that.
 
 ```json
 {
-    ...
+    "...": "...",
     "scripts": {
         "test": "node location/of/your/test.js"
-    }
-    ...
+    },
+    "...": "..."
 }
 ```
 
