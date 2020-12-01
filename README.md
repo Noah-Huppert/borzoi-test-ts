@@ -74,7 +74,7 @@ The `RuntimeTester` `test()` method works exactly the same as the `Tester`
 constructor. The first argument is a subject description and the second argument
 is the test function. However tests defined this way are recorded as sub-tests. 
 This is purely for code organization purposes and does not effect the way tests 
-are run.
+are run. Sub-tests can be nested as many levels deep as you want. 
 
 Finally you must run the `execute()` method of the `Tester` instance you created
 at the beginning.
@@ -89,8 +89,9 @@ tests.execute();
 
 This `execute()` method of the `Tester` class will run all the defined tests and
 exit the process with code 0 if all tests succeeded and 1 if any tests failed. 
-Additionally a color coded summary of test results is printed to 
-standard output.
+Additionally a color coded summary of test results is printed to standard
+output. For your benefit this output also visually indicates sub-tests by 
+indenting them under their parent test.
 
 Then all you have to do is make your NPM test script run the file you just 
 wrote. Simple as that.
