@@ -1,6 +1,6 @@
 {
     "name": "borzoi-test",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "description": "JavaScript ES6 testing library.",
     "main": "lib/index.js",
     "types": "lib/index.d.ts",
