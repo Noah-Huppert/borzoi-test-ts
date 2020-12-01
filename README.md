@@ -1,4 +1,6 @@
-<img alt="Borzoi dog" width="200px" src="./icon.png">
+<img alt="Borzoi dog" width="200px" src="./icon.png">  
+
+*([Photo credit](https://www.instagram.com/birch.the.borzoi/))*
 
 # Borzoi Test
 Typescript and JavaScript ES6 testing library.
@@ -9,6 +11,9 @@ Typescript and JavaScript ES6 testing library.
 # Overview
 Borzoi test implements a simple familiar testing pattern, compatible with 
 Typescript.
+
+Named after Borzoi dogs because their long noses will sniff out any bugs in your
+code :)
 
 To use:
 
