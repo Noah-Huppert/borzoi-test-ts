@@ -2,7 +2,8 @@
 
 *([Photo credit](https://www.instagram.com/birch.the.borzoi/))*
 
-| **[NPM Package `borzoi-test`](https://www.npmjs.com/package/borzoi-test) | ![GitHub Actions workflow status indicator](https://github.com/Noah-Huppert/borzoi-test-ts/workflows/CI/badge.svg) |
+| **[NPM Package `borzoi-test`](https://www.npmjs.com/package/borzoi-test)** | ![GitHub Actions workflow status indicator](https://github.com/Noah-Huppert/borzoi-test-ts/workflows/CI/badge.svg) |
+| --- | --- |
 
 # Borzoi Test
 Typescript and JavaScript ES6 testing library.
